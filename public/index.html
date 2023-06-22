@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API Client</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .api-types {
+      display: flex;
+      align-items: center;
+    }
+    .api-type {
+      margin-right: 10px;
+    }
+    .header-field {
+      display: flex;
+      margin-bottom: 5px;
+    }
+    .header-field input {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>API Client</h1>
+
+  <div class="api-types">
+    <div class="api-type">
+      <input type="radio" id="restApiType" name="apiType" value="rest" checked>
+      <label for="restApiType">REST</label>
+    </div>
+    <div class="api-type">
+      <input type="radio" id="soapApiType" name="apiType" value="soap">
+      <label for="soapApiType">SOAP</label>
+    </div>
+  </div>
+
+  <form id="apiForm">
+    <div>
+      <label for="url">URL:</label>
+      <input type="text" id="url" required>
+    </div>
+    <div>
+      <label for="method">Method:</label>
+      <select id="method" required>
+        <option value="GET">GET</option>
+        <option value="POST">POST</option>
+        <option value="PUT">PUT</option>
+        <option value="DELETE">DELETE</option>
+      </select>
+    </div>
+    <div id="authorizationField">
+      <label for="authorizationType">Authorization Type:</label>
+      <select id="authorizationType">
+        <option value="none">None</option>
+        <option value="basic">Basic Auth</option>
+      </select>
+    </div>
+    <div id="headersField">
+      <label for="headers">Headers:</label>
+      <div id="headerFields">
+        <div class="header-field">
+          <input type="text" class="header-key" placeholder="Key">
+          <input type="text" class="header-value" placeholder="Value">
+        </div>
+      </div>
+      <button type="button" id="addHeaderButton">Add Header</button>
+    </div>
+    <div id="bodyField">
+      <label for="body">Body:</label>
+      <textarea id="body" rows="4"></textarea>
+    </div>
+    <button type="submit">Send Request</button>
+  </form>
+
+  <div id="response">
+    <h2 id="statusCode">Status: </h2>
+    <h2>Response Data:</h2>
+    <pre id="responseData"></pre>
+  </div>
+
+  <!-- <script src="./apiClient.js"></script> -->
+  <script type="module" src="apiClient.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+  <script>
+    const methodField = document.getElementById('method');
+    const bodyField = document.getElementById('body');
+    const bodyLabel = document.querySelector('label[for="body"]');
+  
+    function handleMethodChange() {
+      const selectedMethod = methodField.value;
+  
+      if (selectedMethod === 'GET') {
+        bodyField.style.display = 'none';
+        bodyLabel.style.display = 'none';
+      } else {
+        bodyField.style.display = 'block';
+        bodyLabel.style.display = 'block';
+      }
+    }
+  
+    methodField.addEventListener('change', handleMethodChange);
+  
+    // Call the method change handler initially to set the initial display
+    handleMethodChange();
+  </script>
+</body>
+</html>
